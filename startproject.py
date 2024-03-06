@@ -4,7 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import paho.mqtt.client as mqtt
 
 # MQTT settings
-MQTT_BROKER = "192.168.60.182"
+MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 1883
 MQTT_TOPIC = "data_pant"
 
