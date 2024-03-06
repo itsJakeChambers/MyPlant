@@ -59,36 +59,15 @@ void loop()
 {
   unsigned long currentMillis = millis();
 
-  // Wait a few seconds between measurements.
-  delay(2000);
-
-  // Reading temperature or humidity takes about 250 milliseconds!
+  // Reading temperature and humidity from DHT sensor
   float h = dht.readHumidity();
   float t = dht.readTemperature();
-  float f = dht.readTemperature(true);
 
-  if (isnan(h) || isnan(t) || isnan(f))
+  if (isnan(h) || isnan(t))
   {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
-
-  // Compute heat index in Fahrenheit (the default)
-  float hif = dht.computeHeatIndex(f, h);
-  // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
-
-  Serial.print(F("Humidity: "));
-  Serial.print(h);
-  Serial.print(F("%  Temperature: "));
-  Serial.print(t);
-  Serial.print(F("°C "));
-  Serial.print(f);
-  Serial.print(F("°F  Heat index: "));
-  Serial.print(hic);
-  Serial.print(F("°C "));
-  Serial.print(hif);
-  Serial.println(F("°F"));
 
   // Check if 10 seconds have passed
   if (currentMillis - previousMillis >= interval1)
@@ -105,7 +84,7 @@ void loop()
     previousMillis = currentMillis;
     // Publish data to MQTT
     String data = String(t) + "," + String(h); // Format: "temperature,humidity"
-    client.publish("data_pant", data.c_str());
+    client.publish("data_plant", data.c_str());
   }
 
   // Maintain MQTT connection
