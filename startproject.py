@@ -2,6 +2,7 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import paho.mqtt.client as mqtt
+from tkinter import Label
 
 # MQTT settings
 MQTT_BROKER = "127.0.0.1"
@@ -88,23 +89,38 @@ main_frame = tk.Frame(root)
 main_frame.pack(fill=tk.BOTH, expand=True)
 
 # Subframes
-frame_temp = tk.Frame(main_frame, bg="red", width=200, height=200)
+frame_temp = tk.Frame(main_frame, width=200, height=200)
 frame_temp.grid(row=0, column=0)
-frame_ambient_humidity = tk.Frame(main_frame, bg="green", width=200, height=200)
+frame_ambient_humidity = tk.Frame(main_frame, width=200, height=200)
 frame_ambient_humidity.grid(row=0, column=1)
-frame_soil_humidity = tk.Frame(main_frame, bg="blue", width=200, height=200)
+frame_soil_humidity = tk.Frame(main_frame, width=200, height=200)
 frame_soil_humidity.grid(row=1, column=0)
-frame_light = tk.Frame(main_frame, bg="yellow", width=200, height=200)
+frame_light = tk.Frame(main_frame, width=200, height=200)
 frame_light.grid(row=1, column=1)
 
-# Buttons with values
-button_temp = tk.Button(frame_temp, text=f"Temperature: N/A°C", command=show_temperature_graph)
+# Define function to add emoji label
+def add_emoji_label(frame, temperature):
+    emoji = "🙂" if 10 <= temperature <= 30 else "🥵"
+    emoji_label = Label(frame, text=emoji, font=("Arial", 40))
+    emoji_label.pack(side=tk.LEFT)
+
+
+# Buttons with values and emoji labels
+
+add_emoji_label(frame_temp, 25)
+button_temp = tk.Button(frame_temp, text=f"Temperature: N/A°C 🌡️", command=show_temperature_graph, font=("Arial", 30))
 button_temp.pack(expand=True)
-button_ambient_humidity = tk.Button(frame_ambient_humidity, text=f"Ambient Humidity: N/A%", command=show_ambient_humidity_graph)
+
+add_emoji_label(frame_ambient_humidity, 25)
+button_ambient_humidity = tk.Button(frame_ambient_humidity, text=f"Ambient Humidity: N/A% 💧", command=show_ambient_humidity_graph, font=("Arial", 30))
 button_ambient_humidity.pack(expand=True)
-button_soil_humidity = tk.Button(frame_soil_humidity, text=f"Soil Humidity: N/A%", command=show_soil_humidity_graph)
+
+add_emoji_label(frame_soil_humidity, 4)
+button_soil_humidity = tk.Button(frame_soil_humidity, text=f"Soil Humidity: N/A% 🌱", command=show_soil_humidity_graph, font=("Arial", 30))
 button_soil_humidity.pack(expand=True)
-button_light = tk.Button(frame_light, text=f"Light: 8", command=show_light_graph)
+
+add_emoji_label(frame_light, 25)
+button_light = tk.Button(frame_light, text=f"Light: 8 💡", command=show_light_graph, font=("Arial", 30))
 button_light.pack(expand=True)
 
 # Start MQTT client loop
