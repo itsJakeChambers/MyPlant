@@ -18,3 +18,4 @@ Application qui permet d'observer la température, l'humidité, l'humidité du s
 https://wiki.seeedstudio.com/Grove-Moisture_Sensor/ <br>
 https://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/
 
+<img src="https://github.com/itsKevinJM/myplant/assets/90609887/de6f740f-4d41-41ce-a42a-28c6f9ace506" width="900px"/> 
