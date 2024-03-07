@@ -7,7 +7,7 @@ from tkinter import Label
 # MQTT settings
 MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 1883
-MQTT_TOPIC = "data_pant"
+MQTT_TOPIC = "data_plant"
 
 # Data lists for plotting
 timestamps = []
