@@ -1,52 +1,96 @@
-/*
- This example connects to an unencrypted WiFi network.
- Then it prints the MAC address of the WiFi module,
- the IP address obtained, and other network details.
-
- created 13 July 2010
- by dlf (Metodo2 srl)
- modified 31 May 2012
- by Tom Igoe
- */
+#include <DHT.h>
 #include <SPI.h>
 #include <WiFiNINA.h>
-
-#include "arduino_secrets.h" 
 #include <PubSubClient.h>
 
-///////please enter your sensitive data in the Secret tab/arduino_secrets.h
-char ssid[] = SECRET_SSID;        // your network SSID (name)
-char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
-int status = WL_IDLE_STATUS;     // the WiFi radio's status
+#include "arduino_secrets.h" 
 
-// Update these with values suitable for your network.
-byte mac[]    = {  0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
+void printCurrentNet();
+void printWifiData();
+void reconnect();
+ 
+char ssid[] = SECRET_SSID;
+char pass[] = SECRET_PASS;
+int status = WL_IDLE_STATUS;
 
-IPAddress server(192, 168, 60, 108);
-
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i=0;i<length;i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-}
+byte mac[] = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED};
+IPAddress server(192, 168, 60, 166);
 
 WiFiClient WClient;
 PubSubClient client(WClient);
 
+#define DHTPIN 2
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+unsigned long previousMillis = 0; // Variable for storing previous time
+const long interval1 = 10000;     // Interval for publishing data every 10 seconds
+const long interval2 = 600000;    // Interval for publishing data every 10 minutes
+
+void setup()
+{
+  Serial.begin(9600);
+  dht.begin();
+
+  if (WiFi.status() == WL_NO_MODULE)
+  {
+    Serial.println("Communication with WiFi module failed!");
+    while (true);
+  }
+
+  String fv = WiFi.firmwareVersion();
+  if (fv < WIFI_FIRMWARE_LATEST_VERSION)
+  {
+    Serial.println("Please upgrade the firmware");
+  }
+
+  while (status != WL_CONNECTED)
+  {
+    Serial.print("Attempting to connect to WPA SSID: ");
+    Serial.println(ssid);
+    status = WiFi.begin(ssid, pass);
+    delay(10000);
+    client.setServer(server, 1883);
+  }
+
+  Serial.print("You're connected to the network");
+  printCurrentNet();
+  printWifiData();
+}
+
+void printCurrentNet() {
+  // Print network details
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
+
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.print("Signal Strength (RSSI): ");
+  Serial.println(WiFi.RSSI());
+}
+
+void printWifiData() {
+  // Print MAC address
+  byte mac[6];
+  WiFi.macAddress(mac);
+  Serial.print("MAC Address: ");
+  for (int i = 0; i < 5; i++) {
+    Serial.print(mac[i], HEX);
+    Serial.print(":");
+  }
+  Serial.println(mac[5], HEX);
+}
+
 void reconnect() {
-  // Loop until we're reconnected
+  // Loop until reconnected to MQTT broker
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
-    if (client.connect("MaPlante")) {
+    // Attempt to connect to MQTT broker
+    if (client.connect("ESP8266Client")) {
       Serial.println("connected");
-      
-      // ... and resubscribe
-      client.subscribe("inTopic");
+      // Once connected, subscribe to a topic
+      client.subscribe("esp/test");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -58,107 +102,45 @@ void reconnect() {
 }
 
 
-void setup() {
-  //Initialize serial and wait for port to open:
-  Serial.begin(9600);
+void loop()
+{
+  unsigned long currentMillis = millis();
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  if (isnan(h) || isnan(t))
+  {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+  int moisture = analogRead(A0);
+  int light = analogRead(A2);
   
-
-
-  // check for the WiFi module:
-  if (WiFi.status() == WL_NO_MODULE) {
-    Serial.println("Communication with WiFi module failed!");
-    // don't continue
-    while (true);
+  // Check if 10 seconds have passed
+  if (currentMillis - previousMillis >= interval1)
+  {
+    previousMillis = currentMillis;
+    // Publish data to MQTT
+    String data = String(t) + "," + String(h) + "," + String(moisture) + "," + String(light); // Format: "temperature,humidity"
+    client.publish("data_plant", data.c_str());
   }
 
-  String fv = WiFi.firmwareVersion();
-  if (fv < WIFI_FIRMWARE_LATEST_VERSION) {
-    Serial.println("Please upgrade the firmware");
+  // Check if 10 minutes have passed
+  if (currentMillis - previousMillis >= interval2)
+  {
+    previousMillis = currentMillis;
+    // Publish data to MQTT
+    String data = String(t) + "," + String(h); // Format: "temperature,humidity"
+    client.publish("data_plant", data.c_str());
   }
 
-  // attempt to connect to WiFi network:
-  while (status != WL_CONNECTED) {
-    Serial.print("Attempting to connect to WPA SSID: ");
-    Serial.println(ssid);
-    // Connect to WPA/WPA2 network:
-    status = WiFi.begin(ssid, pass);
-
-    // wait 10 seconds for connection:
-    delay(10000);
-    
-    client.setServer(server, 1883);
-    client.setCallback(callback);
-
-
-  }
-
-  // you're connected now, so print out the data:
-  Serial.print("You're connected to the network");
-  printCurrentNet();
-  printWifiData();
-
-}
-
-void loop() {
-  // check the network connection once every 10 seconds:
-  
-  if (!client.connected()) {
+  // Maintain MQTT connection
+  if (!client.connected())
     reconnect();
-  }
   client.loop();
 
-  // Once connected, publish an announcement...
-  client.publish("outTopic","hello C'est ma plante");
-  delay(1000);
-}
-
-
-void printWifiData() {
-  // print your board's IP address:
-  IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
-  Serial.println(ip);
-
-  // print your MAC address:
-  byte mac[6];
-  WiFi.macAddress(mac);
-  Serial.print("MAC address: ");
-  printMacAddress(mac);
-}
-
-void printCurrentNet() {
-  // print the SSID of the network you're attached to:
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // print the MAC address of the router you're attached to:
-  byte bssid[6];
-  WiFi.BSSID(bssid);
-  Serial.print("BSSID: ");
-  printMacAddress(bssid);
-
-  // print the received signal strength:
-  long rssi = WiFi.RSSI();
-  Serial.print("signal strength (RSSI):");
-  Serial.println(rssi);
-
-  // print the encryption type:
-  byte encryption = WiFi.encryptionType();
-  Serial.print("Encryption Type:");
-  Serial.println(encryption, HEX);
-  Serial.println();
-}
-
-void printMacAddress(byte mac[]) {
-  for (int i = 5; i >= 0; i--) {
-    if (mac[i] < 16) {
-      Serial.print("0");
-    }
-    Serial.print(mac[i], HEX);
-    if (i > 0) {
-      Serial.print(":");
-    }
-  }
-  Serial.println();
+  // Wait a few seconds between measurements.
+  delay(2000);
 }

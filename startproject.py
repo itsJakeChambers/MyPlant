@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 from tkinter import Label
 
 # MQTT settings
-MQTT_BROKER = "127.0.0.1"
+MQTT_BROKER = "192.168.60.166"
 MQTT_PORT = 1883
 MQTT_TOPIC = "data_plant"
 

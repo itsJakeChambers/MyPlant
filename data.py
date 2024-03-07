@@ -1,8 +1,9 @@
 import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 import time
 
 # MQTT settings
-MQTT_BROKER = "127.0.0.1"
+MQTT_BROKER = "192.168.60.166"
 MQTT_PORT = 1883
 MQTT_TOPIC = "data_plant"
 
