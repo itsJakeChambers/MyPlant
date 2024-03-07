@@ -13,6 +13,12 @@ Application qui permet d'observer la température, l'humidité, l'humidité du s
 
 ## Utilisation
 ## Prérequis
+- Python
+- Mosquitto
+- Arduino IDE
+- Tkinter
+- Matplotlib
+  
 ## Installation
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/91eca688-7abf-4f7a-a3e4-aac9e5532e16" width="420px"/>
 
