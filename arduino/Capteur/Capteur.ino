@@ -124,7 +124,7 @@ void loop()
     previousMillis = currentMillis;
     // Publish data to MQTT
     String data = String(t) + "," + String(h) + "," + String(moisture) + "," + String(light); // Format: "temperature,humidity"
-    client.publish("data_plant", data.c_str());
+    client.publish("data_plant1", data.c_str());
   }
 
   // Check if 10 minutes have passed
@@ -133,7 +133,7 @@ void loop()
     previousMillis = currentMillis;
     // Publish data to MQTT
     String data = String(t) + "," + String(h); // Format: "temperature,humidity"
-    client.publish("data_plant", data.c_str());
+    client.publish("data_plant1", data.c_str());
   }
 
   // Maintain MQTT connection

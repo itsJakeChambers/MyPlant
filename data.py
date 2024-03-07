@@ -5,7 +5,7 @@ import time
 # MQTT settings
 MQTT_BROKER = "192.168.60.166"
 MQTT_PORT = 1883
-MQTT_TOPIC = "data_plant"
+MQTT_TOPIC = "data_plant1"
 
 # Fonction pour publier les données
 def publish_data(temperature, ambient_humidity, soil_humidity, light):

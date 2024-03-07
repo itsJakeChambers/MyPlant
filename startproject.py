@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import paho.mqtt.client as mqtt
 from tkinter import Label
+import time
 
 # MQTT settings
 MQTT_BROKER = "192.168.60.166"
 MQTT_PORT = 1883
-MQTT_TOPIC = "data_plant"
+MQTT_TOPIC = "data_plant1"
 
 # Data lists for plotting
 timestamps = []
@@ -25,11 +26,18 @@ def on_message(client, userdata, msg):
     print(f"Received message on topic {msg.topic}: {msg.payload}")
     # Update data lists
     data = str(msg.payload.decode("utf-8")).split(",")
-    timestamps.append(len(timestamps) + 1)  # Add a timestamp
+    timestamp = time.time() # Ajout de l'horodotage actuel
+    timestamps.append(timestamp) # Ajout de l'horodotage à la liste des horodotages
     temperatures.append(float(data[0]))  # Temperature data
     ambient_humidities.append(float(data[1]))  # Ambient humidity data
     soil_humidities.append(float(data[2]))  # Soil humidity data
     lights.append(float(data[3]))  # Light data
+
+    print("Timestamps:", timestamps)
+    print("Temperatures:", temperatures)
+    print("Ambient Humidities:", ambient_humidities)
+    print("Soil Humidities:", soil_humidities)
+    print("Lights:", lights)
     # Update UI
     update_ui()
 
@@ -39,40 +47,52 @@ def update_ui():
 
 # Functions to show graphs
 def show_temperature_graph():
-    plt.figure(figsize=(6, 4))
-    plt.plot(timestamps, temperatures, marker='o', color='blue')
-    plt.xlabel('Time')
-    plt.ylabel('Temperature (°C)')
-    plt.title('Temperature')
-    plt.grid(True)
-    plt.show()
+    if len(timestamps) > 1:
+        plt.figure(figsize=(6, 4))
+        plt.plot(timestamps, temperatures, marker='o', color='blue')
+        plt.xlabel('Time')
+        plt.ylabel('Temperature (°C)')
+        plt.title('Temperature')
+        plt.grid(True)
+        plt.show()
+    else: 
+        print("Pas assez de données pour tracer le graphique de température.")
 
 def show_ambient_humidity_graph():
-    plt.figure(figsize=(6, 4))
-    plt.plot(timestamps, ambient_humidities, marker='o', color='green')
-    plt.xlabel('Time')
-    plt.ylabel('Ambient Humidity (%)')
-    plt.title('Ambient Humidity')
-    plt.grid(True)
-    plt.show()
+    if len(timestamps) > 1:
+        plt.figure(figsize=(6, 4))
+        plt.plot(timestamps, ambient_humidities, marker='o', color='green')
+        plt.xlabel('Time')
+        plt.ylabel('Ambient Humidity (%)')
+        plt.title('Ambient Humidity')
+        plt.grid(True)
+        plt.show()
+    else: 
+        print("Pas assez de données pour tracer le graphique de température.")
 
 def show_soil_humidity_graph():
-    plt.figure(figsize=(6, 4))
-    plt.plot(timestamps, soil_humidities, marker='o', color='orange')
-    plt.xlabel('Time')
-    plt.ylabel('Soil Humidity (%)')
-    plt.title('Soil Humidity')
-    plt.grid(True)
-    plt.show()
+    if len(timestamps) > 1:
+        plt.figure(figsize=(6, 4))
+        plt.plot(timestamps, soil_humidities, marker='o', color='orange')
+        plt.xlabel('Time')
+        plt.ylabel('Soil Humidity (%)')
+        plt.title('Soil Humidity')
+        plt.grid(True)
+        plt.show()
+    else: 
+        print("Pas assez de données pour tracer le graphique de température.")
 
 def show_light_graph():
-    plt.figure(figsize=(6, 4))
-    plt.plot(timestamps, lights, marker='o', color='red')
-    plt.xlabel('Time')
-    plt.ylabel('Light')
-    plt.title('Light')
-    plt.grid(True)
-    plt.show()
+    if len(timestamps) > 1:
+        plt.figure(figsize=(6, 4))
+        plt.plot(timestamps, lights, marker='o', color='red')
+        plt.xlabel('Time')
+        plt.ylabel('Light')
+        plt.title('Light')
+        plt.grid(True)
+        plt.show()
+    else: 
+        print("Pas assez de données pour tracer le graphique de température.")
 
 # MQTT client
 client = mqtt.Client()
