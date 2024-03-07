@@ -2,14 +2,13 @@
 
 Application qui permet de suivre l'évolution d'une plante avec de nombreux capteurs sur le prototype. <br>
 
-* [Utilisation](#usage)
 * [Prérequis](#requirements)
+* [Utilisation](#usage)
 * [Installation](#installation)
 * [Ressources](#resources)
 
 # DOCUMENTATION EN COURS
 
-## Utilisation
 ## Prérequis
 - Python
 - Mosquitto
@@ -29,6 +28,7 @@ Application qui permet de suivre l'évolution d'une plante avec de nombreux capt
 - un capteur d'humidité du sol
 - un capteur de luminosité.
 
+## Utilisation
 ## Ressources
 https://wiki.seeedstudio.com/Grove-Moisture_Sensor/ <br>
 https://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/
