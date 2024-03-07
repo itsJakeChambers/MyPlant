@@ -43,7 +43,11 @@ def on_message(client, userdata, msg):
 
 # Update UI
 def update_ui():
-    pass
+    # Mise à jour du texte des boutons avec les dernières valeurs des données
+    button_temp.config(text=f"Temperature: {temperatures[-1]}°C 🌡️")
+    button_ambient_humidity.config(text=f"Ambient Humidity: {ambient_humidities[-1]}% 💧")
+    button_soil_humidity.config(text=f"Soil Humidity: {soil_humidities[-1]}% 🌱")
+    button_light.config(text=f"Light: {lights[-1]} 💡")
 
 # Functions to show graphs
 def show_temperature_graph():
