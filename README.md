@@ -7,7 +7,7 @@ Application qui permet de suivre l'évolution d'une plante avec de nombreux capt
 * [Installation](#installation)
 * [Ressources](#resources)
 
-# DOCUMENTATION EN COURS
+# PROJET TERMINÉ ET FONCTIONNEL MAIS DOCUMENTATION EN COURS
 
 ## Prérequis
 - Python
