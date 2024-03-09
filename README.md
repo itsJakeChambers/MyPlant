@@ -25,10 +25,28 @@ Ouvrez arduino, puis installez les librairies suivantes :
 - WiFiNINA
 - WiFi101
 
+<img src="https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84" width="200px"/>
+
 Maintenant ouvrez une console (en dehors de arduino) et installez le protocole MQTT (Mosquitto) : 
 
+Linux : ``sudo apt install mosquitto mosquitto-clients``
 
-![image](https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84)
+* Mosquito est le broker MQTT
+* Mosquito-clients installe le client mosquito_sub pour souscrire à un topic et mosquito_pub pour publier un Topic
+  
+Le broker MQTT se lance au démarrage, vous n'avez pas d'opération à faire pour recevoir et 
+émettre des Topics depuis un autre terminal.
+
+(warning) Vous devez autoriser les connexions anonymes
+
+Éditez le fichier mosquitto.conf : `sudo nano /etc/mosquitto/mosquitto.conf`
+
+Ajoutez ces deux lignes : <br>
+`àllow_anonymous true`<br>
+`listener 1883`
+
+Sauvegardez le fichier, puis relancer le service Mosquitto : `sudo service mosquitto restart`
+
 
 #### Le prototype :
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/91eca688-7abf-4f7a-a3e4-aac9e5532e16" width="420px"/>
