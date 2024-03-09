@@ -25,11 +25,11 @@ Ouvrez arduino, puis installez les librairies suivantes :
 - WiFiNINA
 - WiFi101
 
-<img src="https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84" width="200px"/>
+<img src="https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84" width="550px"/>
 
 Maintenant ouvrez une console (en dehors de arduino) et installez le protocole MQTT (Mosquitto) : 
 
-Avec Linux : 
+### __Avec Linux :__ 
 ``sudo apt install mosquitto mosquitto-clients``
 
 * Mosquito est le broker MQTT
@@ -38,24 +38,23 @@ Avec Linux :
 Le broker MQTT se lance au démarrage, vous n'avez pas d'opération à faire pour recevoir et 
 émettre des Topics depuis un autre terminal.
 
-(warning) Vous devez autoriser les connexions anonymes
-
-Éditez le fichier mosquitto.conf : `sudo nano /etc/mosquitto/mosquitto.conf`
-
-Ajoutez ces deux lignes : <br>
-`àllow_anonymous true`<br>
-`listener 1883`
+> [!WARNING]
+> Vous devez autoriser les connexions anonymes. <br>
+> Éditez le fichier mosquitto.conf : `sudo nano /etc/mosquitto/mosquitto.conf` <br>
+> Puis ajoutez ces deux lignes : <br>
+>```
+>àllow_anonymous true
+>listener 1883
+>```
 
 Sauvegardez le fichier, puis relancer le service Mosquitto : `sudo service mosquitto restart`
 
 
-Avec Python : 
-.1 Installation de la librairie PAHO Client 
-Pour souscrire ou publier des messages MQTT avec Python il faut au préalable installer une librairie. Nous 
-allons installer la librairie PAHO client avec la commande 
-Pour Python 2:
-$ sudo pip install paho-mqtt
-Pour Python3:
+### __Avec Python :__ 
+
+Pour Python2: `sudo pip install paho-mqtt` ou `sudo apt install python3-paho-mqtt` <br>
+Pour Python3: `sudo pip3 install paho-mqtt` ou `sudo apt install python3-paho-mqtt`
+
 La documentation de la libraire se trouve à l'adresse https://pypi.org/project/paho-mqtt/
 3.2 La classe Client
 La classe Client contient les méthodes pour se connecter/déconnecter au broker, pour publier un message sur 
