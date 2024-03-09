@@ -3,8 +3,8 @@
 Application qui permet de suivre l'évolution d'une plante avec de nombreux capteurs sur le prototype. <br>
 
 * [Prérequis](#requirements)
-* [Utilisation](#usage)
 * [Installation](#installation)
+* [Utilisation](#usage)
 * [Ressources](#resources)
 
 # PROJET TERMINÉ ET FONCTIONNEL MAIS DOCUMENTATION EN COURS
@@ -17,6 +17,19 @@ Application qui permet de suivre l'évolution d'une plante avec de nombreux capt
 - Matplotlib
   
 ## Installation
+
+Ouvrez arduino, puis installez les librairies suivantes : 
+- DHT sensor library (pour faire fonctionner le capteur de Temps/Humidité DHT22)
+- PubSubClient
+- Adafruit Unified Sensor
+- WiFiNINA
+- WiFi101
+
+Maintenant ouvrez une console (en dehors de arduino) et installez le protocole MQTT (Mosquitto) : 
+
+
+![image](https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84)
+
 #### Le prototype :
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/91eca688-7abf-4f7a-a3e4-aac9e5532e16" width="420px"/>
 <br>
