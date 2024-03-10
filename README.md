@@ -91,8 +91,13 @@ Ouvrir un autre terminal et taper la commande : `mosquitto_pub -h localhost -t "
 __Vous devez voir s'afficher sur le terminal de souscription au Topic le message Coucou__
 ![Capture du 2024-03-10 00-47-13](https://github.com/itsKevinJM/myplant/assets/90609887/7724dc42-d10d-4bb1-86e2-0df449820409)
 
+## Résultat
 
+### __Prototype et capteurs connectés à notre plante :__ <br>
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/e4a19761-51fa-4555-acae-845b20781687" width="420px"/>
+<br><br>
+
+### __Affichage graphique de notre app avec les données en temps réelle :__ <br>
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/de6f740f-4d41-41ce-a42a-28c6f9ace506" width="900px"/> 
 
 ## Ressources
