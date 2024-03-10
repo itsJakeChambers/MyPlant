@@ -2,11 +2,11 @@
 
 Application qui permet de suivre l'évolution d'une plante avec de nombreux capteurs sur le prototype. <br>
 
-* [Prérequis](#requirements)
+* [Prérequis](#prérequis)
 * [Installation](#installation)
-* [Utilisation](#usage)
-* [Ressources](#resources)
-* [Résultat](#result)
+* [Utilisation](#utilisation)
+* [Ressources](#ressources)
+* [Résultat](#résultat)
   <br>
   <br>
 >[!IMPORTANT]
@@ -80,7 +80,7 @@ Pour utiliser la classe Client vous devez inclure la librairie au début de votr
 > - un capteur d'humidité du sol
 > - un capteur de luminosité.
 
-## Usage
+## Utilisation
 
 Test du broker Mosquitto en local avec le client sur la Raspberry. 
 Ouvrir un terminal et taper la commande : `mosquitto_sub -h localhost -v -t "test/message` pour que le client mosquitto souscrive au Topic /test/message.
