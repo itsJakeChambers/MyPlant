@@ -2,11 +2,11 @@
 
 Application qui permet de suivre l'évolution d'une plante avec de nombreux capteurs sur le prototype. <br>
 
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Ressources](#ressources)
-- [Résultat](#résultat)
+[Prérequis](#prérequis)<br>
+[Installation](#installation)<br>
+[Utilisation](#utilisation)<br>
+[Ressources](#ressources)<br>
+[Résultat](#résultat)
   <br>
   <br>
 >[!IMPORTANT]
