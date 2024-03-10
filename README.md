@@ -6,8 +6,7 @@ Application qui permet de suivre l'évolution d'une plante avec de nombreux capt
 [Installation](#installation)<br>
 [Utilisation](#utilisation)<br>
 [Résultat](#résultat)<br>
-[Ressources](#ressources)
-  <br>
+[Ressources](#ressources)<br>
   <br>
 >[!IMPORTANT]
 >## Prérequis
