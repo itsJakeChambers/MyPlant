@@ -80,7 +80,7 @@ Pour utiliser la classe Client vous devez inclure la librairie au début de votr
 > - un capteur d'humidité du sol
 > - un capteur de luminosité.
 
-## Utilisation
+## Usage
 
 Test du broker Mosquitto en local avec le client sur la Raspberry. 
 Ouvrir un terminal et taper la commande : `mosquitto_sub -h localhost -v -t "test/message` pour que le client mosquitto souscrive au Topic /test/message.
