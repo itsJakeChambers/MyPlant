@@ -1,15 +1,15 @@
 # 🪴 My Plant
 
-Application qui permet de suivre l'évolution d'une plante avec de nombreux capteurs sur le prototype. <br>
+Application that allows to follow the evolution of a plant with many sensors on the prototype. <br>
 
-[Prérequis](#prérequis)<br>
+[Prerequisites](#prerequisites)<br>
 [Installation](#installation)<br>
-[Utilisation](#utilisation)<br>
-[Résultat](#résultat)<br>
-[Ressources](#ressources)<br>
+[Usage](#usage)<br>
+[Result](#result)<br>
+[Resources](#resources)<br>
   <br>
 >[!IMPORTANT]
->## Prérequis
+>## Prerequisites
 >- Python
 >- Mosquitto
 >- Arduino IDE
@@ -18,8 +18,8 @@ Application qui permet de suivre l'évolution d'une plante avec de nombreux capt
   
 ## Installation
 
-Ouvrez arduino, puis installez les librairies suivantes : 
-- DHT sensor library (pour faire fonctionner le capteur de Temps/Humidité DHT22)
+Open arduino, then install the following libraries :
+- DHT sensor library (to run the DHT22 Time/Humidity sensor)
 - PubSubClient
 - Adafruit Unified Sensor
 - WiFiNINA
@@ -27,79 +27,77 @@ Ouvrez arduino, puis installez les librairies suivantes :
 
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/032a1fd1-f98c-49d7-a4ee-6dcb02303e84" width="550px"/>
 
-Maintenant ouvrez une console (en dehors de arduino) et installez le protocole MQTT (Mosquitto) : 
+Now open a console (outside arduino) and install the MQTT protocol (Mosquitto) : 
 
-### __Avec Linux :__ 
+### __With Linux :__ 
 ``sudo apt install mosquitto mosquitto-clients``
 
-* Mosquito est le broker MQTT
-* Mosquito-clients installe le client mosquito_sub pour souscrire à un topic et mosquito_pub pour publier un Topic
+* Mosquito is the MQTT broker
+* Mosquito-clients installs the Mosquito_sub client to subscribe to a topic and Mosquito_pub to publish a topic
   
-Le broker MQTT se lance au démarrage, vous n'avez pas d'opération à faire pour recevoir et 
-émettre des Topics depuis un autre terminal.
+The MQTT broker starts at startup, you do not have to do anything to receive and issue Topics from another terminal.
 
 > [!WARNING]
-> Vous devez autoriser les connexions anonymes. <br>
-> Éditez le fichier mosquitto.conf : `sudo nano /etc/mosquitto/mosquitto.conf` <br>
-> Puis ajoutez ces deux lignes : <br>
+> You must allow anonymous connections. <br>
+> Edit the mosquitto.conf file : `sudo nano /etc/mosquitto/mosquitto.conf` <br>
+> Then add these two lines : <br>
 >```
 >àllow_anonymous true
 >listener 1883
 >```
 
-Sauvegardez le fichier, puis relancer le service Mosquitto : `sudo service mosquitto restart`
+Save the file, then restart the Mosquitto service: sudo service mosquitto restart : `sudo service mosquitto restart`
 
 
-### __Avec Python :__ 
+### __With Python :__ 
 
-Pour Python2: `sudo pip install paho-mqtt` ou `sudo apt install python3-paho-mqtt` <br>
-Pour Python3: `sudo pip3 install paho-mqtt` ou `sudo apt install python3-paho-mqtt`
+For Python2: `sudo pip install paho-mqtt` or `sudo apt install python3-paho-mqtt` <br>
+For Python3: `sudo pip3 install paho-mqtt` or `sudo apt install python3-paho-mqtt`
 
-La documentation de la librairie se trouve à l'adresse https://pypi.org/project/paho-mqtt/.
+The library documentation can be found at https://pypi.org/project/paho-mqtt/.
 
-La classe Client contient les méthodes pour se connecter/déconnecter au broker, pour publier un message sur 
-un topic, pour souscrire/dé-souscrire d'un topic:
+The Client class contains the methods to connect/disconnect to the broker, to publish a message on a topic, to subscribe/unsubscribe from a topic :
 
-- connect() et disconnecte()
+- connect() and disconnect()
 - publish()
-- subscribe() et unsubscribe ()
+- subscribe() and unsubscribe ()
 
-Pour utiliser la classe Client vous devez inclure la librairie au début de votre programme : `import paho.mqtt.client as mqtt`<br>
+To use the Client class you must include the library at the beginning of your program : `import paho.mqtt.client as mqtt`<br>
 ![Capture du 2024-03-10 00-22-17](https://github.com/itsKevinJM/myplant/assets/90609887/f0bbe8c9-05e0-423c-9e3d-b06a1ea9c8e2)
 
 
-#### Le prototype :
+#### The prototype :
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/91eca688-7abf-4f7a-a3e4-aac9e5532e16" width="420px"/>
 <br>
 
 >[!NOTE]
->#### Les différents capteurs :
-> - un capteur de température
-> - un capteur d'humidité
-> - un capteur d'humidité du sol
-> - un capteur de luminosité.
+>#### The different sensors :
+> - a temperature sensor
+> - a humidity sensor
+> - a soil humidity sensor
+> - a brightness sensor
 
-## Utilisation
+## Usage
 
-Test du broker Mosquitto en local avec le client sur la Raspberry. 
-Ouvrir un terminal et taper la commande : `mosquitto_sub -h localhost -v -t "test/message` pour que le client mosquitto souscrive au Topic /test/message.
-Le terminal est dans l'attente de recevoir un message sur ce topic
+Test the Mosquitto broker locally with the client on the Raspberry. 
+Open a terminal and type the command : `mosquitto_sub -h localhost -v -t "test/message` so that the mosquitto client subscribes to the Topic /test/message.
+The terminal is waiting to receive a message on this topic
 <br><br>
-Ouvrir un autre terminal et taper la commande : `mosquitto_pub -h localhost -t "test/message" -m "Coucou"` pour publier un message sur ce topic.
+Open another terminal and type the command : `mosquitto_pub -h localhost -t "test/message" -m "Coucou"` to publish a message on this topic.
 
-__Vous devez voir s'afficher sur le terminal de souscription au Topic le message Coucou__
+__You should see the message "Coucou" displayed on the terminal subscribing to the Topic__
 ![Capture du 2024-03-10 00-47-13](https://github.com/itsKevinJM/myplant/assets/90609887/7724dc42-d10d-4bb1-86e2-0df449820409)
 
-## Résultat
+## Result
 
-### __Prototype et capteurs connectés à notre plante :__ <br>
+### __Prototype and sensors connected to our plant :__ <br>
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/e4a19761-51fa-4555-acae-845b20781687" width="420px"/>
 <br><br>
 
-### __Affichage graphique de notre app avec les données en temps réelle :__ <br>
+### __Graphical display of our application with real-time data :__ <br>
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/de6f740f-4d41-41ce-a42a-28c6f9ace506" width="900px"/> 
 
-## Ressources
+## Resources
 https://wiki.seeedstudio.com/Grove-Moisture_Sensor/ <br>
 https://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/
 
