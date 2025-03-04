@@ -98,6 +98,10 @@ __You should see the message "Coucou" displayed on the terminal subscribing to t
 <img src="https://github.com/itsKevinJM/myplant/assets/90609887/de6f740f-4d41-41ce-a42a-28c6f9ace506" width="900px"/> 
 
 ## Resources
+https://mosquitto.org/man/mosquitto_sub-1.html
+https://pypi.org/project/paho-mqtt/
+https://pypi.org/project/paho-mqtt/#constructor-reinitialise
+https://docs.arduino.cc/libraries/pubsubclient/
 https://wiki.seeedstudio.com/Grove-Moisture_Sensor/ <br>
 https://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/
 
